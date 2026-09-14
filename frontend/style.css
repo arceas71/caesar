@@ -32,6 +32,8 @@ body {
 
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+
+    overflow: hidden;
 }
 
 button,
@@ -43,11 +45,98 @@ button {
     border: 0;
 }
 
+
+/* ---------------- Splash ---------------- */
+
+#splash-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--background);
+
+    animation: splash-out 0.55s ease 1.15s forwards;
+}
+
+.splash-mark {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 21px;
+
+    background: #292929;
+    color: #eeeeee;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    box-shadow:
+        0 16px 45px rgba(0, 0, 0, 0.22);
+
+    animation: splash-mark-in 0.6s ease-out;
+}
+
+.splash-name {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+
+    animation: splash-name-in 0.6s ease-out;
+}
+
+@keyframes splash-mark-in {
+    from {
+        opacity: 0;
+        transform: scale(0.82) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes splash-name-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes splash-out {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+
+/* ---------------- App ---------------- */
+
 #app {
     width: 100%;
     max-width: 920px;
+
     height: 100vh;
     height: 100dvh;
+
     margin: 0 auto;
 
     display: flex;
@@ -55,6 +144,7 @@ button {
 
     background: var(--background);
 }
+
 
 /* ---------------- Header ---------------- */
 
@@ -95,6 +185,7 @@ button {
     font-weight: 700;
 }
 
+
 /* ---------------- Chat ---------------- */
 
 #chat {
@@ -107,6 +198,8 @@ button {
 
     display: flex;
     flex-direction: column;
+
+    overscroll-behavior: contain;
 }
 
 #welcome {
@@ -160,9 +253,12 @@ button {
     font-weight: 400;
 }
 
+
 /* ---------------- Messages ---------------- */
 
 .message {
+    position: relative;
+
     width: fit-content;
     max-width: min(72%, 620px);
 
@@ -175,6 +271,10 @@ button {
     line-height: 1.65;
 
     animation: message-in 0.2s ease-out;
+
+    user-select: text;
+
+    touch-action: pan-y;
 }
 
 .user-message {
@@ -196,17 +296,213 @@ button {
     border-bottom-left-radius: 6px;
 }
 
-@keyframes message-in {
+.message.deleted {
+    color: #666666;
+    font-style: italic;
+}
+
+.message.deleted .message-text {
+    color: #666666;
+}
+
+
+/* ---------------- Reply inside message ---------------- */
+
+.message-reply {
+    margin-bottom: 8px;
+    padding: 7px 10px;
+
+    border-left: 2px solid #606060;
+
+    color: #858585;
+
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.message-reply-label {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #666666;
+
+    font-size: 10px;
+}
+
+
+/* ---------------- Reaction ---------------- */
+
+.message-reaction {
+    position: absolute;
+
+    right: -7px;
+    bottom: -10px;
+
+    min-width: 27px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 7px;
+
+    border-radius: 13px;
+
+    background: #292929;
+
+    font-size: 13px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ---------------- Context menu ---------------- */
+
+.message-menu {
+    position: fixed;
+    z-index: 500;
+
+    display: none;
+    flex-direction: column;
+
+    min-width: 180px;
+
+    padding: 6px;
+
+    border-radius: 14px;
+
+    background: #252525;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.35);
+
+    animation: menu-in 0.12s ease-out;
+}
+
+.message-menu.visible {
+    display: flex;
+}
+
+.message-menu button {
+    padding: 9px 11px;
+
+    border-radius: 9px;
+
+    background: transparent;
+    color: #dddddd;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.12s ease,
+        color 0.12s ease;
+}
+
+.message-menu button:hover {
+    background: #303030;
+}
+
+.message-menu .danger-action {
+    color: #d7a0a0;
+}
+
+.menu-divider {
+    height: 1px;
+
+    margin: 4px 5px;
+
+    background: #363636;
+}
+
+@keyframes menu-in {
     from {
         opacity: 0;
-        transform: translateY(5px);
+        transform: scale(0.96);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1);
     }
 }
+
+
+/* ---------------- Reply preview ---------------- */
+
+.reply-preview {
+    display: none;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding: 10px 12px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    background: #202020;
+
+    border-radius: 12px 12px 0 0;
+}
+
+.reply-preview.visible {
+    display: flex;
+}
+
+.reply-preview-content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.reply-preview-label {
+    margin-bottom: 2px;
+
+    color: #777777;
+
+    font-size: 10px;
+}
+
+#reply-preview-text {
+    overflow: hidden;
+
+    color: #b5b5b5;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#cancel-reply {
+    width: 26px;
+    height: 26px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: transparent;
+    color: #888888;
+
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
 
 /* ---------------- Composer ---------------- */
 
@@ -271,9 +567,13 @@ button {
     color: #747474;
 }
 
+
+/* ---------------- Send ---------------- */
+
 #send-button {
     width: 44px;
     height: 44px;
+
     flex-shrink: 0;
 
     display: flex;
@@ -297,8 +597,10 @@ button {
     height: 18px;
 
     fill: none;
+
     stroke: currentColor;
     stroke-width: 2;
+
     stroke-linecap: round;
     stroke-linejoin: round;
 }
@@ -313,20 +615,27 @@ button {
 
 #send-button:disabled {
     opacity: 0.35;
+
     cursor: default;
+
     transform: none;
 }
 
-.composer-note {
-    margin-top: 9px;
 
-    text-align: center;
+/* ---------------- Animation ---------------- */
 
-    color: var(--subtle);
+@keyframes message-in {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
 
-    font-size: 10px;
-    font-weight: 400;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 
 /* ---------------- Scrollbar ---------------- */
 
@@ -347,6 +656,7 @@ button {
     background: #363636;
     border-radius: 10px;
 }
+
 
 /* ---------------- Mobile ---------------- */
 
@@ -389,7 +699,9 @@ button {
 
     #message-form {
         min-height: 54px;
+
         border-radius: 18px;
+
         padding-left: 16px;
     }
 
@@ -400,5 +712,9 @@ button {
     #send-button {
         width: 42px;
         height: 42px;
+    }
+
+    .message-menu {
+        min-width: 165px;
     }
 }

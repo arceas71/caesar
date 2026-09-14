@@ -19,18 +19,32 @@
 
 <body>
 
+    <!-- Splash -->
+
+    <div id="splash-screen">
+        <div class="splash-mark">C</div>
+        <div class="splash-name">Caesar</div>
+    </div>
+
+
+    <!-- App -->
+
     <div id="app">
 
         <header class="chat-header">
+
             <div class="brand">
                 <div class="brand-mark">C</div>
                 <span>Caesar</span>
             </div>
+
         </header>
+
 
         <main id="chat" aria-live="polite">
 
             <div id="welcome">
+
                 <div class="welcome-mark">C</div>
 
                 <h1>Caesar</h1>
@@ -38,12 +52,90 @@
                 <p>
                     A conversation with your future self.
                 </p>
+
             </div>
 
         </main>
 
+
+        <!-- Context menu -->
+
+        <div
+            id="message-menu"
+            class="message-menu"
+            role="menu"
+        >
+
+            <button
+                type="button"
+                data-action="reply"
+            >
+                Reply
+            </button>
+
+            <button
+                type="button"
+                data-action="react"
+            >
+                React
+            </button>
+
+            <div class="menu-divider"></div>
+
+            <button
+                type="button"
+                data-action="delete-me"
+            >
+                Delete for me
+            </button>
+
+            <button
+                type="button"
+                data-action="delete-everyone"
+                class="danger-action"
+            >
+                Delete for everyone
+            </button>
+
+        </div>
+
+
+        <!-- Reply preview -->
+
+        <div
+            id="reply-preview"
+            class="reply-preview"
+        >
+
+            <div class="reply-preview-content">
+
+                <span class="reply-preview-label">
+                    Replying to
+                </span>
+
+                <span id="reply-preview-text"></span>
+
+            </div>
+
+            <button
+                type="button"
+                id="cancel-reply"
+                aria-label="Cancel reply"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- Composer -->
+
         <div class="composer-wrapper">
-            <form id="message-form" autocomplete="off">
+
+            <form
+                id="message-form"
+                autocomplete="off"
+            >
 
                 <input
                     type="text"
@@ -58,6 +150,7 @@
                     id="send-button"
                     aria-label="Send message"
                 >
+
                     <svg
                         viewBox="0 0 24 24"
                         aria-hidden="true"
@@ -65,18 +158,20 @@
                         <path d="M12 19V5"></path>
                         <path d="M6.5 11.5L12 5L17.5 11.5"></path>
                     </svg>
+
                 </button>
 
             </form>
 
-            <p class="composer-note">
-                Caesar can make mistakes. Think for yourself.
-            </p>
         </div>
 
     </div>
 
-    <script type="module" src="app.js"></script>
+
+    <script
+        type="module"
+        src="app.js"
+    ></script>
 
 </body>
 </html>
