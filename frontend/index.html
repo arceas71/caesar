@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Caesar</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,10 +20,63 @@
 <body>
 
     <div id="app">
-        <h1>Caesar</h1>
-        <p>Your future-self inspired AI.</p>
+
+        <header class="chat-header">
+            <div class="brand">
+                <div class="brand-mark">C</div>
+                <span>Caesar</span>
+            </div>
+        </header>
+
+        <main id="chat" aria-live="polite">
+
+            <div id="welcome">
+                <div class="welcome-mark">C</div>
+
+                <h1>Caesar</h1>
+
+                <p>
+                    A conversation with your future self.
+                </p>
+            </div>
+
+        </main>
+
+        <div class="composer-wrapper">
+            <form id="message-form" autocomplete="off">
+
+                <input
+                    type="text"
+                    id="message-input"
+                    placeholder="Message Caesar"
+                    aria-label="Message Caesar"
+                    maxlength="4000"
+                >
+
+                <button
+                    type="submit"
+                    id="send-button"
+                    aria-label="Send message"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path d="M12 19V5"></path>
+                        <path d="M6.5 11.5L12 5L17.5 11.5"></path>
+                    </svg>
+                </button>
+
+            </form>
+
+            <p class="composer-note">
+                Caesar can make mistakes. Think for yourself.
+            </p>
+        </div>
+
     </div>
 
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
+
 </body>
 </html>
